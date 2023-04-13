@@ -26,7 +26,8 @@ public String readPath(int directory){
 	}
 }
 public static void main(String[] args) {
-	Javadirectory synchroniser = new Javadirectory("C:\\Users\\ccomb\\javaProject\\src","C:\\Users\\ccomb\\javaProject\\target");
+	//Chemin depuis la racine à ajouter exemple ci dessous.
+	//Javadirectory synchroniser = new Javadirectory("C:\\Users\\ccomb\\javaProject\\src","C:\\Users\\ccomb\\javaProject\\target");
 	ListFile realisator = new ListFile();
 	String src_p = synchroniser.readPath(0);
 	String target_p = synchroniser.readPath(1);
