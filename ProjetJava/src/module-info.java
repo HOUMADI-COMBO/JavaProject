@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author ccomb
+ *
+ */
+module ProjetJava {
+}
