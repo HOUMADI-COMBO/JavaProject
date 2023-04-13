@@ -8,5 +8,8 @@ import java.util.ArrayList;
 public class File {
   private ArrayList<String> targetFileName =New ArrayList<String>(); 
   private ArrayList<String> srcFileName =New ArrayList<String>();
+  private String targetPath ;
+  private String srcPath; 
+  File( String targetPatth
 
 }
