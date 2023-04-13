@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class TemporalInformation {
+public class File {
 private static String src_path ="C:\\Users\\ccomb\\javaProject\\src";
 private static String target_path ="C:\\Users\\ccomb\\javaProject\\target";
 private int  prioritarydate;
@@ -97,7 +97,7 @@ public void maj(ArrayList<String> comparaisonResult,String dest ,String src)thro
 		}
 }
 public static void main(String args[]) {
-    TemporalInformation temporal = new TemporalInformation();
+    File temporal = new File();
     ContentInformation content = new ContentInformation();
 	ArrayList<String> src = content.listContent(src_path);
 	ArrayList<String> dest = content.listContent(target_path);
