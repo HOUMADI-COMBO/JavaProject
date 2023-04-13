@@ -22,4 +22,10 @@ public class Comparaison {
 		else
 			return false;
 	}
+	public boolean comparaionNom(String name1,String Name2) {
+	if(name1.equals(Name2)) 
+		return true;
+	else 
+		return false ;
+}
 }
