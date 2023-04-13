@@ -1,4 +1,4 @@
-package sunchronise_directory;
+package JavaProject;
 
 import java.io.File;
 import java.nio.file.Files;
