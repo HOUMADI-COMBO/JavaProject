@@ -11,7 +11,7 @@ Javadirectory(String pathS,String pathD){
     this.PathD=pathD;
 }
 public String readPath(char directory){
-	if(directory == 's') return PathD;
+	if(directory == 's') return PathS;
 	if(directory == 't') return PathD;
 	return null;
 }
