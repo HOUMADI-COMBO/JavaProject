@@ -1,6 +1,7 @@
 package javadirectory;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Javadirectory{
 	private static int security = 0 ;
@@ -24,6 +25,7 @@ public String readPath(int directory){
 	}
 }
 public static void main(String[] args) {
+	Scanner saisieUtilisateur = new Scanner(System.in);
 	while (security == 0) {
 		Running synch = new Running();
 		synch.start();
@@ -34,7 +36,10 @@ public static void main(String[] args) {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Veuillez saisir un entier :");
+		security = saisieUtilisateur.nextInt();
 	}
+	System.out.println("Fin de la synchronisation de vos dossiers ");
 }
 }
 

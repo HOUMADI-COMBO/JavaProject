@@ -70,7 +70,7 @@ public ArrayList<String> listMaj(String p_source,String p_dest){
 	for(int i=0;i<nameS.size();i++) {
 		for(int j=0;j<nameT.size();j++) {
 			if( ( comparator.comparaionNom(nameS.get(i),nameT.get(j)) )) {
-				if ((comparator.comparaisonTemps((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))))
+				if ( (comparator.comparaisonTemps((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) && (comparator.comparaisonTaille((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) )
 					maj.add(nameS.get(i));
 				    System.out.println("maj"+nameS.get(i));
 			}

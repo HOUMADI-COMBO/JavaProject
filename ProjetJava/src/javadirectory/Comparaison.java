@@ -6,14 +6,11 @@ public class Comparaison {
 	public boolean comparaisonTaille(String Name1, String Name2){
 		File file1 = new File(Name1);
 		File file2 = new File(Name2);
-		if (file1.length() == file2.length()) 
+		if (file1.length() != file2.length())
 			return true ;
-		
 		else 
 			return false ;
-		
 	}
-	
 	public boolean comparaisonTemps(String Name1, String Name2){
 		File file1 = new File(Name1);
 		File file2 = new File(Name2);
