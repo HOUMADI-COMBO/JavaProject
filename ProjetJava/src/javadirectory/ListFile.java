@@ -1,5 +1,5 @@
 package javadirectory;
-//ceci est un commentaire
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,9 +9,19 @@ import java.util.ArrayList;
 public class ListFile {
 private OperationAdditionnel operator = new OperationAdditionnel();
 private Comparaison comparator = new Comparaison();
-	
+
+public ArrayList<String> listDoss(String path){
+	//return a list of directory (directory names) present in considered directory
+	ArrayList<String> contentName = new ArrayList<String>();
+	File doss = new File(path);
+	File[] list = doss.listFiles();
+	for(File item : list)
+		if( item.isDirectory()) contentName.add(item.getName());
+	return contentName ;
+
+}
 public ArrayList<String> listNom(String path){
-	//return an list of files (files names) present in considered directory 
+	//return a list of files (files names) present in considered directory
 	ArrayList<String> contentName = new ArrayList<String>();
 	File doss = new File(path); 
 	File[] liste = doss.listFiles();	
@@ -54,20 +64,21 @@ public void Suppresion(String target_path,ArrayList<String>  list)throws IOExcep
 	}
 }
 public ArrayList<String> listMaj(String p_source,String p_dest){
-	ArrayList<String> nameS =listNom(p_dest);
-	ArrayList<String> nameT =listNom(p_source);
-	ArrayList<String> list = new ArrayList<String>();
-	for(int i=0;i<nameT.size();i++) {
-		for(int j=0;j<nameS.size();j++) {
-			if( ( comparator.comparaionNom(nameS.get(i),nameT.get(j)) ) &&( comparator.comparaisonTaille(nameS.get(i),nameT.get(j)) ) ) {
-				if( (comparator.comparaisonTemps( nameS.get(i),nameT.get(j) ) ))
-					list.add( nameS.get(i) );
+	ArrayList<String> nameT =listNom(p_dest);
+	ArrayList<String> nameS =listNom(p_source);
+	ArrayList<String> maj = new ArrayList<String>();
+	for(int i=0;i<nameS.size();i++) {
+		for(int j=0;j<nameT.size();j++) {
+			if( ( comparator.comparaionNom(nameS.get(i),nameT.get(j)) )) {
+				if ((comparator.comparaisonTemps((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))))
+					maj.add(nameS.get(i));
+				    System.out.println("maj"+nameS.get(i));
 			}
 		}
 	}
-	return list;
+	return maj;
 }
-public void maj(String src, String dest,ArrayList<String>  list) throws IOException {
+public void maj(String src, String dest, ArrayList<String>  list) throws IOException {
 	copyfile(src,dest,list);
 }
 private class OperationAdditionnel{
