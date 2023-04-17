@@ -28,7 +28,9 @@ public static void main(String[] args) {
 		Running synch = new Running();
 		synch.start();
 		try {
-			Thread.sleep(20000);
+			//int une_semaine = 1000*60*60*24*7;
+			int dix_secondes =1000*10;
+			Thread.sleep(dix_secondes);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
