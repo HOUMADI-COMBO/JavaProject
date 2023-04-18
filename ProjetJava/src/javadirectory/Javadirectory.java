@@ -1,6 +1,5 @@
 package javadirectory;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Javadirectory{
@@ -35,7 +34,7 @@ public class Javadirectory{
 		switch(reseaux){
 			case 0 :
 				while (security == 0) {
-					Running synch = new Running();
+					RunningLocal synch = new RunningLocal();
 					synch.start();
 					try {
 						//int une_semaine = 1000*60*60*24*7;

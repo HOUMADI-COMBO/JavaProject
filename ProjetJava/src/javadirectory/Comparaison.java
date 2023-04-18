@@ -8,7 +8,7 @@ public class Comparaison {
 		File file2 = new File(Name2);
 		if (file1.length() != file2.length())
 			return true ;
-		else 
+		else
 			return false ;
 	}
 	public boolean comparaisonTemps(String Name1, String Name2){
@@ -20,9 +20,9 @@ public class Comparaison {
 			return false;
 	}
 	public boolean comparaionNom(String name1,String Name2) {
-	if(name1.equals(Name2)) 
-		return true;
-	else 
-		return false ;
-}
+		if(name1.equals(Name2))
+			return true;
+		else
+			return false ;
+	}
 }
