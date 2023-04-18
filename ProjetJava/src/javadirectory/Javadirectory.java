@@ -49,7 +49,7 @@ public class Javadirectory{
 				System.out.println("Fin de la synchronisation de vos dossiers ");
 				break;
 			case 1 :
-				System.out.println("Error!!!!!");
+				System.out.println("  En développements !!!  ");
 				break;
 			default:
 				System.out.println("Error!!!!!");
