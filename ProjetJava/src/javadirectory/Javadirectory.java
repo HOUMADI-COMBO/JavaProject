@@ -44,8 +44,8 @@ public class Javadirectory{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
-					security = saisieUtilisateur.nextInt();
+					//System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
+					//security = saisieUtilisateur.nextInt();
 				}
 				System.out.println("Fin de la synchronisation de vos dossiers ");
 				break;
