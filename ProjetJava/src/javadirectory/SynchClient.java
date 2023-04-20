@@ -13,11 +13,12 @@ import java.io.IOException;
 
 public class SynchClient {
 	private static String targetPath = "C:\\Users\\ccomb\\javaProject\\target";
+	private static int port = 50000;
     public String traitementClient(){
     String sortie = new String();
     Socket socket;
     try{
-        socket = new Socket("localhost",50000);
+        socket = new Socket("localhost",port);
         // Buffered character input stream
         InputStream is = socket.getInputStream();
         InputStreamReader ir = new InputStreamReader(is); // transformation stream octet
@@ -29,15 +30,23 @@ public class SynchClient {
         socket.close();
     } 
     catch(Exception e){ e.printStackTrace(); }
-        return sortie;
+    port++;
+    return sortie;
 }
-public void receiverfile(String name) {
-	try{
-		FileClient client = new FileClient();
-	    client.read(targetPath);
-		client.filereceptor(name);
-    }
-    catch(IOException e){e.printStackTrace();}
+public ArrayList<String> listSuppEccedent(ArrayList<String> srcList, String targetpath) {
+	ListFile operator = new ListFile();
+	ArrayList<String> targetList = operator.listNom(targetpath);
+	for(int i=0;i<srcList.size();i++) {
+		for(int j=0;j<targetList.size();j++) 
+		    if( (srcList.get(i)).equals(targetList.get(j)) ) targetList.remove(srcList.get(i));
+	}
+	return targetList;
+}
+public void suppEccedent(String targetpath,ArrayList<String> suppList) {
+	ListFile operator = new ListFile();
+	try{ operator.Suppresion(targetpath,suppList); }
+	catch(IOException e){e.printStackTrace(); }
+	
 }
 	
 public static void main(String[] args) {
@@ -49,11 +58,21 @@ public static void main(String[] args) {
         if(ajout.equals("fin")) v=false;
         else nameReceptacle.add(ajout);
     }
+    nameReceptacle.remove("fin");
     //receptio de fichier 1 par 1
-    
     for(String s : nameReceptacle) {
-    	SynchClient target = new SynchClient();
-    	target.receiverfile(s);    
+    	System.out.println("Receiving  "+s);
+    	RunningReseaux receiver = new RunningReseaux(1,s,targetPath);
+    	try{
+    		receiver.start();
+    		receiver.sleep(1300);
+    	}
+    	catch(Exception e){e.printStackTrace(); }
     }
+    //Manque à crée une fct qui supprimes les éléments du dossier cible nom présent dans la source et la synchronisation de dossiers sera au point 
+    System.out.println("   Suppressin processing   ");
+    SynchClient target = new SynchClient();
+    ArrayList<String> receptacle = target.listSuppEccedent(nameReceptacle, targetPath);
+    target.suppEccedent(targetPath,receptacle);
 }
 }

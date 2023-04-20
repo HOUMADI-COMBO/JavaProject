@@ -11,8 +11,8 @@ import java.io.IOException;
 
 public class SynchServer {
 private static String srcPath = "C:\\Users\\ccomb\\javaProject\\src";
+private static int port = 50000;
 public void traitementServer(String name) {
-    int port = 50000;
     ServerSocket socketserver = null;
     Socket socket = null;
     try {
@@ -26,15 +26,9 @@ public void traitementServer(String name) {
         socketserver.close();
     }
     catch (Exception e) { e.printStackTrace();  }
+    port++;
 }
-public void senderfile(String name) {
-	try {
-	    FileServeur serveur = new FileServeur();
-        serveur.read(srcPath);
-	    serveur.fileEmetor(name);
-	}
-	catch(IOException e){e.printStackTrace();}
-}
+
 public static void main(String[] args) {
     ListFile mediator = new ListFile();
     ArrayList<String> fileList= mediator.listNom(srcPath);
@@ -44,10 +38,16 @@ public static void main(String[] args) {
         source.traitementServer(s);
     }
     //Emission de fichier 1 par 1
-    
+    fileList.remove("fin");
     for(String s :fileList) {
-    	SynchServer source = new SynchServer();
-    	source.senderfile(s);
+    	System.out.println("Sending"+s);
+    	RunningReseaux sender = new RunningReseaux(0,s,srcPath);	
+    	try{
+    		sender.start();
+    	    sender.sleep(1300);
+    	    Thread.currentThread().interrupted() ;
+    	}
+    	catch(Exception e){e.printStackTrace(); }
     }
 }
 

@@ -17,3 +17,4 @@ public void transfert(InputStream in, OutputStream out, boolean closeOnExit) thr
    }
 }
 }
+//DANS LES classes on chage de port à chaque incrémentation de boucle car le fait d'envoyée sur un unique port posser des d'addresse deja utiliser 

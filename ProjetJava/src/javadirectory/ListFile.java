@@ -60,7 +60,7 @@ public void Suppresion(String target_path,ArrayList<String>  list)throws IOExcep
 	for(int i=0;i<list.size();i++) {
 		String element = list.get(i);
 		File A_supprimer = new File(target_path+"\\"+element);
-		if(A_supprimer.delete()) System.out.println("suppression_succes");
+		if(A_supprimer.delete()) System.out.println("Suppression of : "+element+" succed. ");
 	}
 }
 public ArrayList<String> listMaj(String p_source,String p_dest){
