@@ -1,5 +1,4 @@
 package javadirectory;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,6 +35,7 @@ public ArrayList<String> ListCopyFile(String p_source,String p_dest) throws IOEx
 	return to_copy;
 }
 public void copyfile(String src, String dest,ArrayList<String>  list) throws IOException {
+	//files presents in list are copied from src to dest .
 	for(int i=0 ; i<list.size() ;i++ ) {
 		String fileName = list.get(i);
 		File src_to_copy = new File(src+"\\"+fileName);
@@ -44,6 +44,7 @@ public void copyfile(String src, String dest,ArrayList<String>  list) throws IOE
 	}
 }
 public ArrayList<String> listSuppFile(String p_source,String p_dest) {
+	//files present in target but not in src are erased.
 	ArrayList<String> target =listNom(p_dest);
 	ArrayList<String> contentName = operator.diff_0( listNom(p_source), target);
 	ArrayList<String> toSupp = new ArrayList<String>();
@@ -56,7 +57,7 @@ public ArrayList<String> listSuppFile(String p_source,String p_dest) {
 	return toSupp;
 }
 public void Suppresion(String target_path,ArrayList<String>  list)throws IOException{
-	//supprime les fichier dont le nom est présent dans list
+	//delete files présents in list
 	for(int i=0;i<list.size();i++) {
 		String element = list.get(i);
 		File A_supprimer = new File(target_path+"\\"+element);
@@ -64,6 +65,7 @@ public void Suppresion(String target_path,ArrayList<String>  list)throws IOExcep
 	}
 }
 public ArrayList<String> listMaj(String p_source,String p_dest){
+	//return an list of file deeding to be up to date.
 	ArrayList<String> nameT =listNom(p_dest);
 	ArrayList<String> nameS =listNom(p_source);
 	ArrayList<String> maj = new ArrayList<String>();
@@ -72,17 +74,18 @@ public ArrayList<String> listMaj(String p_source,String p_dest){
 			if( ( comparator.comparaionNom(nameS.get(i),nameT.get(j)) )) {
 				if ( (comparator.comparaisonTemps((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) && (comparator.comparaisonTaille((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) )
 					maj.add(nameS.get(i));
-				System.out.println("maj"+nameS.get(i));
+				System.out.println("Up to date : "+nameS.get(i));
 			}
 		}
 	}
 	return maj;
 }
 public void maj(String src, String dest, ArrayList<String>  list) throws IOException {
+	// réalise la mise à jour avec copyfile qui écrase les fichiers existants
 	copyfile(src,dest,list);
 }
-
 private class OperationAdditionnel{
+	//Regroupement d'opération additionnels pour ne pas avoir à la répéter dans les classes.
 	public ArrayList<String> diff_0(ArrayList<String> src,ArrayList<String> target){
 		//returns list of document, present in both directory, source and target
 		ArrayList<String> comparaison_result = new ArrayList<String>();
@@ -105,6 +108,7 @@ private class OperationAdditionnel{
 		return cR;
 	}
 	public void copyFile(File src, File dest) throws IOException {
+		//copy of src from srcdirectory to dest directory
 		Files.copy(src.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		System.out.println("copy_succes");
 	}

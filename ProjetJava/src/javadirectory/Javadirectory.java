@@ -1,11 +1,9 @@
 package javadirectory;
-
 import java.util.Scanner;
 
 public class Javadirectory{
 private static int security = 0 ;
-private static int reseaux;
-//0 pour synchronisation local 1 pour synchrosisation réseaux
+private static int reseaux;//0 pour synchronisation local 1 pour synchrosisation réseaux
 private String pathS;//0
 private String pathD;//1
 Javadirectory(String pathS,String pathD){
@@ -47,7 +45,16 @@ public static void main(String[] args) {
 			System.out.println("Fin de la synchronisation de vos dossiers ");
 			break;
 		case 1 :
-			System.out.println("  En développements !!!  ");
+			System.out.println(" Etes vous la source ou la destination ? (taper 0 pour vous êtes la source et 1 si vous êtes la destination) :  ");
+			int client_serveur = saisieUtilisateur.nextInt();
+			if(client_serveur == 0){
+				SynchServer source = new SynchServer();
+				source.principal();
+			}
+			if(client_serveur == 1){
+				SynchClient target = new SynchClient();
+				target.principal();
+			}
 			break;
 		default:
 			System.out.println("Error!!!!!");

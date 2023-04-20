@@ -1,5 +1,4 @@
 package javadirectory;
-
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -10,9 +9,10 @@ import java.lang.String;
 import java.io.IOException;
 
 public class SynchServer {
-private static String srcPath = "C:\\Users\\ccomb\\javaProject\\src";
+private static String srcPath = "C:\\Users\\ccomb\\javaProject\\src";// Le serveur possede le dossier source.
 private static int port = 50000;
 public void traitementServer(String name) {
+    //Emeteur de la liste des fichiers posséder par la source
     ServerSocket socketserver = null;
     Socket socket = null;
     try {
@@ -28,8 +28,8 @@ public void traitementServer(String name) {
     catch (Exception e) { e.printStackTrace();  }
     port++;
 }
-
-public static void main(String[] args) {
+public  void principal() {
+    //Méthode main du serveur.
     ListFile mediator = new ListFile();
     ArrayList<String> fileList= mediator.listNom(srcPath);
     fileList.add("fin");
@@ -50,8 +50,8 @@ public static void main(String[] args) {
     	catch(Exception e){e.printStackTrace(); }
     }
 }
-
 private static class Accepter_clients extends Thread {
+    //Gère les sockets de la transmission de la liste d nom.
     private Socket socket;
     private String name;
     public Accepter_clients(Socket socket) {

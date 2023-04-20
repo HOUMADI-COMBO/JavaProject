@@ -1,5 +1,4 @@
 package javadirectory;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStream;
@@ -12,18 +11,17 @@ import java.util.Scanner;
 import java.io.IOException;
 
 public class SynchClient {
-	private static String targetPath = "C:\\Users\\ccomb\\javaProject\\target";
-	private static int port = 50000;
-    public String traitementClient(){
+private static String targetPath = "C:\\Users\\ccomb\\javaProject\\target";// Le client possède le dossier cible.
+private static int port = 50000;
+public String traitementClient(){
+    //Réceptionneur de la liste des fichier de la source.
     String sortie = new String();
     Socket socket;
     try{
         socket = new Socket("localhost",port);
-        // Buffered character input stream
-        InputStream is = socket.getInputStream();
-        InputStreamReader ir = new InputStreamReader(is); // transformation stream octet
-        // en stream de caract
-        BufferedReader rd = new BufferedReader(ir);
+        InputStream is = socket.getInputStream();          // Buffered character input stream
+        InputStreamReader ir = new InputStreamReader(is);  // transformation stream octet
+        BufferedReader rd = new BufferedReader(ir);        // en stream de caract
         String messageSrv = rd.readLine();
         System.out.println(messageSrv);
         sortie =messageSrv;
@@ -34,6 +32,7 @@ public class SynchClient {
     return sortie;
 }
 public ArrayList<String> listSuppEccedent(ArrayList<String> srcList, String targetpath) {
+    //Génere une liste des fichiers qui n'ont pas été envoyée par le serveur
 	ListFile operator = new ListFile();
 	ArrayList<String> targetList = operator.listNom(targetpath);
 	for(int i=0;i<srcList.size();i++) {
@@ -43,13 +42,13 @@ public ArrayList<String> listSuppEccedent(ArrayList<String> srcList, String targ
 	return targetList;
 }
 public void suppEccedent(String targetpath,ArrayList<String> suppList) {
+    // Réalise la supprésion de la liste de fichier crée ci-dessus.
 	ListFile operator = new ListFile();
 	try{ operator.Suppresion(targetpath,suppList); }
 	catch(IOException e){e.printStackTrace(); }
-	
 }
-	
-public static void main(String[] args) {
+public void principal() {
+    //Méthode main du client.
     boolean v =true;
     ArrayList<String> nameReceptacle = new ArrayList<String>();
     while(v){

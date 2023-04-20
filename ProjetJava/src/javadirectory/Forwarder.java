@@ -1,11 +1,9 @@
 package javadirectory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Forwarder {
-
 public void transfert(InputStream in, OutputStream out, boolean closeOnExit) throws IOException {
    byte buf[] = new byte[1024];
    int n;
@@ -17,4 +15,4 @@ public void transfert(InputStream in, OutputStream out, boolean closeOnExit) thr
    }
 }
 }
-//DANS LES classes on chage de port à chaque incrémentation de boucle car le fait d'envoyée sur un unique port posser des d'addresse deja utiliser 
+//Dans Les classes on chage de port à chaque incrémentation de boucle car le fait d'envoyée sur un unique port était problématique.

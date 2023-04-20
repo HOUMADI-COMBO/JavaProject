@@ -12,11 +12,11 @@ public RunningReseaux(int position,String name,String path) {
 	this.path=path;
 	this.name=name;
 }
-
 @Override
 public void run() {
+	//thread for distant synchronisation
 	switch(this.client_server) {
-	    case(0):
+	    case(0)://case serveur
 	    	try {
 		        FileServeur serveur = new FileServeur();
 	            serveur.read(this.path);
@@ -24,7 +24,7 @@ public void run() {
 		    }
 		    catch(IOException e){e.printStackTrace();}
 		    break;
-	    case(1):
+	    case(1)://case client
 	    	try{
 	    		FileClient client = new FileClient();
 	    	    client.read(this.path);
@@ -32,10 +32,9 @@ public void run() {
 	        }
 	        catch(IOException e){e.printStackTrace();}
 	    	break;
-    	default:
+    	default://error
 	    	System.out.println("Error");
 		    break;
 	}
 }
-
 }
