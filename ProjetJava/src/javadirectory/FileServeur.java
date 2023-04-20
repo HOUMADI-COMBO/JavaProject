@@ -12,7 +12,7 @@ public String read(String path) {
 	return this.srcPath=path;
 }
 public void fileEmetor(String fileName) throws IOException {
-    //Le client émet les fichers
+    //Le serveur émet les fichers
     Socket sockfile = new ServerSocket(50000).accept();
     forwarder.transfert(
         new FileInputStream(this.srcPath+"//"+fileName),
