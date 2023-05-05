@@ -9,9 +9,9 @@ import java.io.OutputStream;
 
 public class ListFile {
 private OperationAdditionnel operator = new OperationAdditionnel();
-private Comparaison comparator = new Comparaison();
+//private Comparaison comparator = new Comparaison();
 public boolean mostrecent(String p_source,String p_dest){
-	if( comparator.comparaisonTemps(p_source,p_dest) ) return true;//désigne le dossier source
+	if( operator.comparaisonTemps(p_source,p_dest) ) return true;//désigne le dossier source
 	else{ return false; }//designe le dossier cible
 }
 public ArrayList<String> listDoss(String path){
@@ -75,8 +75,8 @@ public ArrayList<String> listMaj(String p_source,String p_dest){
 	ArrayList<String> maj = new ArrayList<String>();
 	for(int i=0;i<nameS.size();i++) {
 		for(int j=0;j<nameT.size();j++) {
-			if( ( comparator.comparaionNom(nameS.get(i),nameT.get(j)) )) {
-				if ( (comparator.comparaisonTemps((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) && (comparator.comparaisonTaille((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) )
+			if( ( operator.comparaionNom(nameS.get(i),nameT.get(j)) )) {
+				if ( (operator.comparaisonTemps((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) && (operator.comparaisonTaille((p_source+"\\"+nameS.get(i)), (p_dest+"\\"+nameT.get(j)))) )
 					maj.add(nameS.get(i));
 				System.out.println("Up to date : "+nameS.get(i));
 			}
@@ -115,6 +115,28 @@ private class OperationAdditionnel{
 		//copy of src from srcdirectory to dest directory
 		Files.copy(src.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		System.out.println("copy_succes");
+	}
+	public boolean comparaisonTaille(String Name1, String Name2){
+		File file1 = new File(Name1);
+		File file2 = new File(Name2);
+		if (file1.length() != file2.length())
+			return true ;
+		else
+			return false ;
+	}
+	public boolean comparaisonTemps(String Name1, String Name2){
+		File file1 = new File(Name1);
+		File file2 = new File(Name2);
+		if (file1.lastModified()> file2.lastModified())
+			return true;
+		else
+			return false;
+	}
+	public boolean comparaionNom(String name1,String Name2) {
+		if(name1.equals(Name2))
+			return true;
+		else
+			return false ;
 	}
 }
 }
