@@ -2,13 +2,16 @@ package javadirectory;
 import java.util.ArrayList;
 
 public class RunningLocal extends Thread{
+    private String target_p;
+    private String src_p;
+    public RunningLocal(String pathS,String pathD) {
+        this.src_p = pathS;
+        this.target_p = pathD;
+    }
 @Override
 public void run() {
     //thread for local synchronisation
-    Javadirectory synchroniser = new Javadirectory("C:\\Users\\ccomb\\javaProject\\src","C:\\Users\\ccomb\\javaProject\\target");
     ListFile realisator = new ListFile();
-    String src_p = synchroniser.readPath(0);
-    String target_p = synchroniser.readPath(1);
     try{        ArrayList<String> to_copy = realisator.ListCopyFile(src_p,target_p);
         realisator.copyfile(src_p, target_p, to_copy);
     }

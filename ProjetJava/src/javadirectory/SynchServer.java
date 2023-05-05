@@ -9,8 +9,11 @@ import java.lang.String;
 import java.io.IOException;
 
 public class SynchServer {
-private static String srcPath = "C:\\Users\\ccomb\\javaProject\\src";// Le serveur possede le dossier source.
+private static String srcPath ;// Le serveur possede le dossier source.
 private static int port = 50000;
+    public SynchServer(String srcPath){
+        this.srcPath=srcPath;
+    }
 public void traitementServer(String name) {
     //Emeteur de la liste des fichiers posséder par la source
     ServerSocket socketserver = null;
@@ -34,7 +37,7 @@ public  void principal() {
     ArrayList<String> fileList= mediator.listNom(srcPath);
     fileList.add("fin");
     for (String s : fileList) {
-        SynchServer source = new SynchServer();
+        SynchServer source = new SynchServer(srcPath);
         source.traitementServer(s);
     }
     //Emission de fichier 1 par 1

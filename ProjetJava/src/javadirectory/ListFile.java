@@ -10,6 +10,10 @@ import java.io.OutputStream;
 public class ListFile {
 private OperationAdditionnel operator = new OperationAdditionnel();
 private Comparaison comparator = new Comparaison();
+public boolean mostrecent(String p_source,String p_dest){
+	if( comparator.comparaisonTemps(p_source,p_dest) ) return true;//désigne le dossier source
+	else{ return false; }//designe le dossier cible
+}
 public ArrayList<String> listDoss(String path){
 	//return a list of directory (directory names) present in considered directory
 	ArrayList<String> contentName = new ArrayList<String>();

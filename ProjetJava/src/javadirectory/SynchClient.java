@@ -11,8 +11,11 @@ import java.util.Scanner;
 import java.io.IOException;
 
 public class SynchClient {
-private static String targetPath = "C:\\Users\\ccomb\\javaProject\\target";// Le client possède le dossier cible.
+private static String targetPath;// Le client possède le dossier cible.
 private static int port = 50000;
+public SynchClient(String targetPath){
+    this.targetPath=targetPath;
+}
 public String traitementClient(){
     //Réceptionneur de la liste des fichier de la source.
     String sortie = new String();
@@ -52,7 +55,7 @@ public void principal() {
     boolean v =true;
     ArrayList<String> nameReceptacle = new ArrayList<String>();
     while(v){
-        SynchClient target = new SynchClient();
+        SynchClient target = new SynchClient(targetPath);
         String ajout = target.traitementClient();
         if(ajout.equals("fin")) v=false;
         else nameReceptacle.add(ajout);
@@ -70,7 +73,7 @@ public void principal() {
     }
     //Manque à crée une fct qui supprimes les éléments du dossier cible nom présent dans la source et la synchronisation de dossiers sera au point 
     System.out.println("   Suppressin processing   ");
-    SynchClient target = new SynchClient();
+    SynchClient target = new SynchClient(targetPath);
     ArrayList<String> receptacle = target.listSuppEccedent(nameReceptacle, targetPath);
     target.suppEccedent(targetPath,receptacle);
 }
