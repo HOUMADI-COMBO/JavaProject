@@ -22,6 +22,7 @@ public RunningReseaux(int position,String name,String path) {
 	this.client_server=position;
 	this.path=path;
 	this.name=name;
+	if(this.port>=55000)this.port=50000;
 }
 @Override
 public void run() {

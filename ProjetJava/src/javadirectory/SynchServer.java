@@ -11,8 +11,10 @@ import java.io.IOException;
 public class SynchServer {
 private static String srcPath ;// Le serveur possede le dossier source.
 private static int port = 50000;
+private int security =0;
     public SynchServer(String srcPath){
         this.srcPath=srcPath;
+        if(this.port>=52000)this.port=50000;
     }
 public void traitementServer(String name) {
     //Emeteur de la liste des fichiers posséder par la source
@@ -33,26 +35,28 @@ public void traitementServer(String name) {
 }
 public  void principal() {
     //Méthode main du serveur.
-    ListFile mediator = new ListFile();
-    ArrayList<String> fileList= mediator.listNom(srcPath);
-    fileList.add("fin");
-    for (String s : fileList) {
-        SynchServer source = new SynchServer(srcPath);
-        source.traitementServer(s);
+        ListFile mediator = new ListFile();
+        ArrayList<String> fileList = mediator.listNom(srcPath);
+        fileList.add("fin");
+        for (String s : fileList) {
+            SynchServer source = new SynchServer(srcPath);
+            source.traitementServer(s);
+        }
+        //Emission de fichier 1 par 1
+        fileList.remove("fin");
+        for (String s : fileList) {
+            System.out.println("Sending" + s);
+            RunningReseaux sender = new RunningReseaux(0, s, srcPath);
+            try {
+                sender.start();
+                sender.sleep(1000);
+                Thread.currentThread().interrupted();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
-    //Emission de fichier 1 par 1
-    fileList.remove("fin");
-    for(String s :fileList) {
-    	System.out.println("Sending"+s);
-    	RunningReseaux sender = new RunningReseaux(0,s,srcPath);	
-    	try{
-    		sender.start();
-    	    sender.sleep(1300);
-    	    Thread.currentThread().interrupted() ;
-    	}
-    	catch(Exception e){e.printStackTrace(); }
-    }
-}
+
 private static class Accepter_clients extends Thread {
     //Gère les sockets de la transmission de la liste d nom.
     private Socket socket;
@@ -76,3 +80,5 @@ private static class Accepter_clients extends Thread {
     }
 }
 }
+
+
