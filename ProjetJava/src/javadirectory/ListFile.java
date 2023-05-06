@@ -1,11 +1,17 @@
 package javadirectory;
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.io.InputStream;
 import java.io.OutputStream;
+import static java.nio.file.StandardCopyOption.*;
+import java.lang.Object;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class ListFile {
 private OperationAdditionnel operator = new OperationAdditionnel();
@@ -14,22 +20,13 @@ public boolean mostrecent(String p_source,String p_dest){
 	if( operator.comparaisonTemps(p_source,p_dest) ) return true;//désigne le dossier source
 	else{ return false; }//designe le dossier cible
 }
-public ArrayList<String> listDoss(String path){
-	//return a list of directory (directory names) present in considered directory
-	ArrayList<String> contentName = new ArrayList<String>();
-	File doss = new File(path);
-	File[] list = doss.listFiles();
-	for(File item : list)
-		if( item.isDirectory()) contentName.add(item.getName());
-	return contentName ;
-}
 public ArrayList<String> listNom(String path){
 	//return a list of files (files names) present in considered directory
 	ArrayList<String> contentName = new ArrayList<String>();
 	File doss = new File(path);
 	File[] liste = doss.listFiles();
 	for(File item : liste)
-		if( item.isFile()) contentName.add(item.getName());
+		contentName.add(item.getName());
 	return contentName ;
 }
 public ArrayList<String> ListCopyFile(String p_source,String p_dest) throws IOException{
@@ -40,11 +37,13 @@ public ArrayList<String> ListCopyFile(String p_source,String p_dest) throws IOEx
 }
 public void copyfile(String src, String dest,ArrayList<String>  list) throws IOException {
 	//files presents in list are copied from src to dest .
-	for(int i=0 ; i<list.size() ;i++ ) {
+	for (int i = 0; i < list.size(); i++) {
 		String fileName = list.get(i);
-		File src_to_copy = new File(src+"\\"+fileName);
-		File copy_to_dest = new File(dest+"\\"+fileName);
-		operator.copyFile(src_to_copy, copy_to_dest);
+		File src_to_copy = new File(src + "\\" + fileName);
+		File copy_to_dest = new File(dest + "\\" + fileName);
+		if (src_to_copy.isFile())
+			operator.copyFile(src_to_copy, copy_to_dest);
+		else { operator.copyFolder( src_to_copy, copy_to_dest);}
 	}
 }
 public ArrayList<String> listSuppFile(String p_source,String p_dest) {
@@ -115,6 +114,17 @@ private class OperationAdditionnel{
 		//copy of src from srcdirectory to dest directory
 		Files.copy(src.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		System.out.println("copy_succes");
+	}
+	public void copyFolder(File src, File dest) throws IOException {
+		try (Stream<Path> stream = Files.walk(src.toPath())) {
+			stream.forEachOrdered(sourcePath -> {
+				try {
+					Files.copy(	sourcePath,src.toPath().resolve(dest.toPath().relativize(sourcePath)));
+				} catch (IOException e) {
+					throw new UncheckedIOException(e);
+				}
+			});
+		}
 	}
 	public boolean comparaisonTaille(String Name1, String Name2){
 		File file1 = new File(Name1);

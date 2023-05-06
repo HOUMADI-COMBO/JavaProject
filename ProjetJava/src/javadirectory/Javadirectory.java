@@ -5,13 +5,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
+import java.util.Scanner;
 
 public class Javadirectory  implements ActionListener {
 private int security = 0 ;
+private int autorisation_1;
+private int autorisation_2;
 private int reseaux;//0 pour synchronisation local 1 pour synchrosisation réseaux
-private String pathS="C:\\Users\\ccomb\\javaProject\\src";//0
-private String pathD="C:\\Users\\ccomb\\javaProject\\target";//1
-private String ip="localhost";
+private String pathS;//0
+private String pathD;//1
+private String ip;
 private ListFile operator = new ListFile();
 private JFrame  frame ;
 private JPanel panel;
@@ -29,6 +32,7 @@ private JButton btnNewButton_6;
 private JButton btnNewButton_7;
 private JButton btnNewButton_8;
 private int client_serveur;
+private Scanner saisieUtilisateur = new Scanner(System.in);
 
 Javadirectory(){
 	JFrame  frame = new JFrame();
@@ -66,7 +70,7 @@ Javadirectory(){
 	btnNewButton.addActionListener(this);
 	panel.add(btnNewButton);
 
-	btnNewButton_4 = new JButton("Security");
+	btnNewButton_4 = new JButton("Annuler !");
 	btnNewButton_4.setPreferredSize(new Dimension(300, 60));
 	btnNewButton_4.setBackground(new Color(209, 173, 224));
 	btnNewButton_4.addActionListener(this);
@@ -75,7 +79,7 @@ Javadirectory(){
 	txtCheminDossier = new JTextField();
 	txtCheminDossier.setPreferredSize(new Dimension(800, 50));
 	txtCheminDossier.setSize(new Dimension(800, 60));
-	txtCheminDossier.setText("Chemin dossier 1");
+	txtCheminDossier.setText("Effacer et remplacer par chemin dossier source ex : 'C:\\Users\\ccomb\\javaProject\\src'");
 	panel.add(txtCheminDossier);
 	txtCheminDossier.setColumns(80);
 
@@ -88,7 +92,7 @@ Javadirectory(){
 	txtCheminDossier_1 = new JTextField();
 	txtCheminDossier_1.setPreferredSize(new Dimension(800, 50));
 	txtCheminDossier_1.setMinimumSize(new Dimension(800, 50));
-	txtCheminDossier_1.setText("Chemin dossier 2");
+	txtCheminDossier_1.setText("Effacer et remplacer par chemin dossier source ex : 'C:\\Users\\ccomb\\javaProject\\target'");
 	panel.add(txtCheminDossier_1);
 	txtCheminDossier_1.setColumns(80);
 
@@ -100,7 +104,7 @@ Javadirectory(){
 
 	txtIpDestination = new JTextField();
 	txtIpDestination.setPreferredSize(new Dimension(300, 40));
-	txtIpDestination.setText("Ip destination ( IPv4 )");
+	txtIpDestination.setText("Effacer et remplacer par l'ipv4 de destination : 'localhost' ");
 	panel.add(txtIpDestination);
 	txtIpDestination.setColumns(50);
 
@@ -124,7 +128,9 @@ Javadirectory(){
 	panel.add(btnNewButton_8);
 
 	frame.setVisible(true);
-	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	btnNewButton_8.setVisible(false);
+	btnNewButton_4.setVisible(false);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
 	public void actionPerformed(ActionEvent e) {
 		String name = txtCheminDossier.getText();
@@ -133,11 +139,17 @@ Javadirectory(){
 		String result ="";
 		if(e.getSource() == btnNewButton_5){
 			this.pathS = name;
+			this.autorisation_1++;
 			txtCheminDossier_2.setText(this.pathS);
+			if( ( reseaux==0 && ((autorisation_2 >=1) && (autorisation_1 >=1)) ) ||  ( reseaux==1 && ((autorisation_2 >=1) || (autorisation_1 >=1))  ) )
+				btnNewButton_8.setVisible(true);
 		}
 		if(e.getSource() == btnNewButton_6){
 			this.pathD = name1;
+			this.autorisation_2++;
 			txtCheminDossier_2.setText(this.pathD);
+			if( ( reseaux==0 && ((autorisation_2 >=1) && (autorisation_1 >=1)) ) ||  ( reseaux==1 && ((autorisation_2 >=1) || (autorisation_1 >=1))  ) )
+			    btnNewButton_8.setVisible(true);
 		}
 		if(e.getSource() == btnNewButton_7){
 			this.ip = name2;
@@ -146,22 +158,43 @@ Javadirectory(){
 		if(e.getSource() == btnNewButton){
 			this.client_serveur=0;
 			txtCheminDossier_2.setText("Serveur mode");
+			this.btnNewButton_1.setVisible(false);
+			this.btnNewButton.setVisible(false);
+			this.btnNewButton_7.setVisible(false);
+			this.btnNewButton_6.setVisible(false);
+			this.txtIpDestination.setVisible(false);
+			this.txtCheminDossier_1.setVisible(false);
 		}
 		if(e.getSource() == btnNewButton_1){
 			this.client_serveur=1;
 			txtCheminDossier_2.setText("Client mode");
+			this.btnNewButton_1.setVisible(false);
+			this.btnNewButton.setVisible(false);
+			this.btnNewButton_1.setVisible(false);
+			this.btnNewButton.setVisible(false);
+			this.btnNewButton_5.setVisible(false);
+			this.txtCheminDossier.setVisible(false);
 		}
 		if(e.getSource() == btnNewButton_2){
 			this.reseaux=1;
 			txtCheminDossier_2.setText("Synchronisation Réseau ");
+			this.btnNewButton_2.setVisible(false);
+			this.btnNewButton_3.setVisible(false);
 		}
 		if(e.getSource() == btnNewButton_3){
 			this.reseaux=0;
+			this.btnNewButton_3.setVisible(false);
+			this.btnNewButton_1.setVisible(false);
+			this.btnNewButton_7.setVisible(false);
+			this.btnNewButton_2.setVisible(false);
+			this.btnNewButton.setVisible(false);
+			this.txtIpDestination.setVisible(false);
+			this.btnNewButton_4.setVisible(true);
 			txtCheminDossier_2.setText("Synchronisation Local ");
 		}
 		if(e.getSource() == btnNewButton_4){
 			this.security=1;
-			txtCheminDossier_2.setText("Annulation");
+			txtCheminDossier_2.setText("Annulation! Veuillez Fermer la fenêtre.");
 		}
 		if(e.getSource() == btnNewButton_8){
 			txtCheminDossier_2.setText("Synchronisation en cours ");
@@ -171,7 +204,6 @@ Javadirectory(){
 public void Synchronisation(){
 	switch (reseaux) {
 		case 0:
-			System.out.println("Synchronisation local lancée");
 			while (security == 0) {
 				RunningLocal synch = new RunningLocal(pathS, pathD);
 				synch.start();
@@ -179,21 +211,19 @@ public void Synchronisation(){
 					//int une_semaine = 1000*60*60*24*7;
 					int dix_secondes = 1000 * 10;
 					Thread.sleep(dix_secondes);
-					if (operator.mostrecent(pathS, pathD)) {
-						String path = pathS;
-						this.pathS = pathD;
-						this.pathD = path;
-					}
-
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
-				//security = saisieUtilisateur.nextInt();
+				if (operator.mostrecent(pathS, pathD)) {
+					String path = pathS;
+					this.pathS = pathD;
+					this.pathD = path;
+				}
+				System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
+				security = saisieUtilisateur.nextInt();
 			}
 			break;
 		case 1://Le réseau reste monodirectionelle et ouvert
-			System.out.println("Synchronisation réseaux lancée");
 			if (client_serveur == 0) {
 				while (security == 0) {
 					SynchServer source = new SynchServer(pathS);
@@ -205,8 +235,8 @@ public void Synchronisation(){
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					//System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
-					//security = saisieUtilisateur.nextInt();
+					System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
+					security = saisieUtilisateur.nextInt();
 				}
 			}
 			if (client_serveur == 1) {
@@ -220,8 +250,9 @@ public void Synchronisation(){
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					//System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
-					//security = saisieUtilisateur.nextInt();
+
+					System.out.println("Voulez vous continuer la synchronisation de vos dossiers? (taper 0 pour oui 1 pour non) :");
+					security = saisieUtilisateur.nextInt();
 				}
 			}
 			break;
